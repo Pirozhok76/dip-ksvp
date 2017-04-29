@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09013c1c-6cad-41a4-8463-b86b886f312e" name="Default" comment="" />
+    <list default="true" id="09013c1c-6cad-41a4-8463-b86b886f312e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +20,8 @@
       <file leaf-file-name="calc.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/calc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+            <state relative-caret-position="153">
+              <caret line="148" column="119" lean-forward="true" selection-start-line="148" selection-start-column="119" selection-end-line="148" selection-end-column="119" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -366,8 +368,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/calc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+        <state relative-caret-position="153">
+          <caret line="148" column="119" lean-forward="true" selection-start-line="148" selection-start-column="119" selection-end-line="148" selection-end-column="119" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
