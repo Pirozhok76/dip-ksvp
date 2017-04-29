@@ -11,14 +11,18 @@ class calcul:
     eps = 60
     eps1 = math.tan(eps)
 
-    R2 = 289
+
     R1 = 287
+    R2 = 289
+    R3 = 283
     z1 = 1
     z2 = 1
+    z3 = 1
     r1 = 1
     T1 = 300
     k1 = 1.4
     k2 = 1.33
+    k3 = 1.33
     theta2 = np.array([1, 2, 3, 4, 5, 6])
     allM1 = np.array([0.1, 0.4, 0.8])
     a1 = np.sqrt(k1 * R1 * T1)
@@ -115,7 +119,7 @@ class calcul:
 
 
     @staticmethod
-    def exial(R1, R2, delta, eps1, r2s, allM1, a1, theta2, ms, k1, k2, T1, z1, z2, Pi0):        #приосевой вихрь
+    def exial(R1, R2, R3, delta, eps1, r2s, allM1, a1, theta2, ms, k1, k2, k3, T1, z1, z2, z3, Pi0):        #приосевой вихрь
 
 
         sqreps = (1 + eps1 ** 2)
@@ -123,6 +127,8 @@ class calcul:
 
             rs = np.arange(0, r2, 0.05)
 
+            rg = r2
+            r3zone = np.arange(re, rg, 0.05)
             for o, pi0 in enumerate(Pi0):
 
                 for j, theta in enumerate(theta2):
@@ -139,6 +145,10 @@ class calcul:
 
                         mf1 = mz1 * eps1
 
+                        Piks = 1/(1 - (((M1 ** 2) * k1)/2))
+
+
+
                         for p, m in enumerate(ms):
 
                             A = ((k1 - 1) / (2 * m)) * ((M1 ** 2) / (1 + sqreps))
@@ -151,11 +161,19 @@ class calcul:
 
                             B = ((z1 * R1)/(z2 * R2)) * (((k2 - 1) * k1 * (M1 ** 2))/(2 * gamma * k2 * sqreps *
                                                                                       (r2 ** (2 * m)) * theta2 * fi2))
+                            C = ((k1 * (k3 - 1) * (M1 ** 2))/(2 * k3 * gamma * sqreps * fi2 * (r2 ** (2 * m))))\
+                                * ((z1 * R1)/(z3 * R3))
+
+
+                            ksi3zone = 1 - C * (1 - ((r/r2) ** (2 * gamma)))
+
 
                             for k, r in enumerate(rs):
 
-                                Mf = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * (((k1 * R1)/(k2 * R2)) ** 0.5) * (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
+                                Mf = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * (((k1 * R1)/(k2 * R2)) ** 0.5)\
+                                     * (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
 
+                            for
 
 
 
