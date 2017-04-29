@@ -21,8 +21,8 @@
       <file leaf-file-name="calc.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/calc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="153" column="81" lean-forward="true" selection-start-line="153" selection-start-column="81" selection-end-line="153" selection-end-column="81" />
+            <state relative-caret-position="29">
+              <caret line="152" column="0" lean-forward="true" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -306,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493484218922</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="piks + ksi + c">
+      <created>1493485662524</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1493485662524</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -368,7 +375,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="mf axial" />
-    <option name="LAST_COMMIT_MESSAGE" value="mf axial" />
+    <MESSAGE value="piks + ksi + c" />
+    <option name="LAST_COMMIT_MESSAGE" value="piks + ksi + c" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -407,8 +415,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/calc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="153" column="81" lean-forward="true" selection-start-line="153" selection-start-column="81" selection-end-line="153" selection-end-column="81" />
+        <state relative-caret-position="29">
+          <caret line="152" column="0" lean-forward="true" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

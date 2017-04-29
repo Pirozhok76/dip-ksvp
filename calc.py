@@ -32,6 +32,7 @@ class calcul:
     r2s = np.array([0.6, 0.7, 0.8])
     rs = []
     Pi0 = np.array([1.5, 3, 6])
+    ksiG = 1
 
 
 
@@ -119,7 +120,7 @@ class calcul:
 
 
     @staticmethod
-    def exial(R1, R2, R3, delta, eps1, r2s, allM1, a1, theta2, ms, k1, k2, k3, T1, z1, z2, z3, Pi0):        #приосевой вихрь
+    def exial(R1, R2, R3, delta, eps1, r2s, allM1, a1, theta2, ms, k1, k2, k3, T1, z1, z2, z3, Pi0):   #приосевой вихрь
 
 
         sqreps = (1 + eps1 ** 2)
@@ -128,7 +129,9 @@ class calcul:
             rs = np.arange(0, r2, 0.05)
 
             rg = r2
-            r3zone = np.arange(re, rg, 0.05)
+            r3zones = np.arange(re, rg, 0.05)
+
+
             for o, pi0 in enumerate(Pi0):
 
                 for j, theta in enumerate(theta2):
@@ -146,6 +149,7 @@ class calcul:
                         mf1 = mz1 * eps1
 
                         Piks = 1/(1 - (((M1 ** 2) * k1)/2))
+                        Pie = Piks
 
 
 
@@ -164,8 +168,13 @@ class calcul:
                             C = ((k1 * (k3 - 1) * (M1 ** 2))/(2 * k3 * gamma * sqreps * fi2 * (r2 ** (2 * m))))\
                                 * ((z1 * R1)/(z3 * R3))
 
+                            re = rg * ((1 - (1/C) *
+                                        (1 - ((1/(Pie * (fi2 ** (k1/(k1 - 1))))) ** ((k3 - 1)/k3)))) ** 1/(2 * gamma))
 
-                            ksi3zone = 1 - C * (1 - ((r/r2) ** (2 * gamma)))
+                            for u, r3zone in enumerate(r3zones):
+
+
+                                ksi3zone = 1 - C * (1 - ((r3zone/r2) ** (2 * gamma)))
 
 
                             for k, r in enumerate(rs):
@@ -173,7 +182,6 @@ class calcul:
                                 Mf = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * (((k1 * R1)/(k2 * R2)) ** 0.5)\
                                      * (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
 
-                            for
 
 
 
