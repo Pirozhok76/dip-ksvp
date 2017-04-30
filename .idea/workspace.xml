@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="09013c1c-6cad-41a4-8463-b86b886f312e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/calc.py" afterPath="$PROJECT_DIR$/calc.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +20,8 @@
       <file leaf-file-name="calc.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/calc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="215" column="112" lean-forward="true" selection-start-line="215" selection-start-column="112" selection-end-line="215" selection-end-column="112" />
+            <state relative-caret-position="379">
+              <caret line="216" column="108" lean-forward="true" selection-start-line="216" selection-start-column="108" selection-end-line="216" selection-end-column="108" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -320,7 +319,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493487751766</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="mf , mz,wz for 3 and 4 zones">
+      <created>1493565967801</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1493565967801</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -384,7 +390,8 @@
     <MESSAGE value="mf axial" />
     <MESSAGE value="piks + ksi + c" />
     <MESSAGE value="re" />
-    <option name="LAST_COMMIT_MESSAGE" value="re" />
+    <MESSAGE value="mf , mz,wz for 3 and 4 zones" />
+    <option name="LAST_COMMIT_MESSAGE" value="mf , mz,wz for 3 and 4 zones" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -433,8 +440,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/calc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="215" column="112" lean-forward="true" selection-start-line="215" selection-start-column="112" selection-end-line="215" selection-end-column="112" />
+        <state relative-caret-position="379">
+          <caret line="216" column="108" lean-forward="true" selection-start-line="216" selection-start-column="108" selection-end-line="216" selection-end-column="108" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
