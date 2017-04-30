@@ -3,6 +3,9 @@ import os
 # from sympy import *
 import numpy as np
 import math
+from multiprocessing import Pool
+
+
 
 # eps = 60
 
@@ -124,7 +127,8 @@ class calcul:
 
 
     @staticmethod
-    def axial(R1, R2, R3, Re, delta, eps1, r2s, allM1, a1, theta2, ms, k1, k2, k3, ke, T1, z1, z2, z3, ze, Pi0, Ksig):   #приосевой вихрь
+    def axial(R1, R2, R3, Re, eps1, r2s, allM1, a1, theta2, ms, k1, k2, k3, ke, z1, z2, z3, ze, Pi0, Ksig):
+        #приосевой вихрь
 
         mzs3zone = []
         mzs4zone = []
@@ -139,7 +143,6 @@ class calcul:
 
             rg = r2
 
-
             for o, pi0 in enumerate(Pi0):
 
                 for j, theta in enumerate(theta2):
@@ -150,7 +153,7 @@ class calcul:
 
                     for l, M1 in enumerate(allM1):
 
-                        mz1 = M1 / (sqreps ** 0.5)
+                        mz1 = M1/(sqreps ** 0.5)
 
                         w1 = M1 * a1
 
@@ -161,8 +164,6 @@ class calcul:
                         Piks = 1/(1 - (((M1 ** 2) * k1)/2))
 
                         Pie = Piks
-
-
 
                         for p, m in enumerate(ms):
 
@@ -183,7 +184,7 @@ class calcul:
                             re = rg * ((1 - (1/C) *
                                         (1 - ((1/(Pie * (fi2 ** (k1/(k1 - 1))))) ** ((k3 - 1)/k3)))) ** 1/(2 * gamma))
 
-                            r3zones = np.arange(re, rg, 0.05)
+                            r3zones = np.arange(re, r2, 0.05)
 
                             r4zones = np.arange(0, re, 0.05)
 
@@ -202,7 +203,7 @@ class calcul:
                                 ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma))) # Ksi E
 
                                 D = ((z1 * R1)/(ze * Re)) * ((re/r2) ** (2 * gamma)) * ((k1 * (ke - 1) * (M1 ** 2))/
-                                                (2 * ke * gamma * sqreps * fi2 * Ksig * ksi4zone * ( r2 ** (2 * m))))
+                                                (2 * ke * gamma * sqreps * fi2 * Ksig * ksi4zone * (r2 ** (2 * m))))
 
                                 U = 1 - D * (1 - ((r4zone/re) ** (2 * gamma)))
 
@@ -222,18 +223,28 @@ class calcul:
 
                                 wfsAx.append(WfAx)
 
+    # @staticmethod
+    # def run():
+    #     calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,
+    #                       calcul.eps1, calcul.r2s, calcul.allM1,
+    #                       calcul.a1, calcul.theta2, calcul.ms,
+    #                       calcul.k1, calcul.T1)
 
+if __name__ == '__main__':
 
-
-
-
-
-    @staticmethod
-    def run():
-        calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,
+    periph = calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,
                           calcul.eps1, calcul.r2s, calcul.allM1,
                           calcul.a1, calcul.theta2, calcul.ms,
                           calcul.k1, calcul.T1)
 
-if __name__ == '__main__':
-    calcul.run()
+    axial = calcul.axial(calcul.R1, calcul.R2, calcul.R3, calcul.Re, calcul.eps1, calcul.r2s,
+                         calcul.allM1, calcul.a1, calcul.theta2, calcul.ms, calcul.k1, calcul.k2,
+                         calcul.k3, calcul.ke, calcul.z1, calcul.z2, calcul.z3, calcul.ze, calcul.Pi0, calcul.Ksig)
+
+    pool = Pool()
+    pool.map(periph, axial)
+    pool.close()
+    pool.join()
+
+
+    # calcul.run()
