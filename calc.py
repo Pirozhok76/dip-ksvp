@@ -110,7 +110,7 @@ class calcul:
                         func1 = (1 - A * ((1 / (r ** (2 * m))) - 1))
                         func2 = np.sqrt(k1 * R1 * T1 * func1)
 
-                        mf = M1 / ((sqreps ** 0.5 ) * (func1 ** 0.5) * (r ** (2 * m)))
+                        mf = M1 / ((sqreps ** 0.5) * (func1 ** 0.5) * (r ** (2 * m)))
                         mfsPer.append(mf)
 
                         M = np.sqrt((mf ** 2) + (mz ** 2))
@@ -188,16 +188,18 @@ class calcul:
                             re = rg * ((1 - (1/C) *
                                         (1 - ((1/(Pie * (fi2 ** (k1/(k1 - 1))))) ** ((k3 - 1)/k3)))) ** 1/(2 * gamma))
 
-                            Re.append(re)
+                            re = re.tolist()
+
+                            Re.extend(re)
 
 
                             for h, re in enumerate(Re):
 
-                                r3zone = np.arange(re, rg, 0.05)
+                                r3zones = np.arange(re, rg, 0.05)
 
                                 # r3zones.append(r3zone)
 
-                                r4zone = np.arange(0, re, 0.05)
+                                r4zones = np.arange(0, re, 0.05)
 
                                 # r4zones.append(r4zone)
 
@@ -214,7 +216,7 @@ class calcul:
 
                                     ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma))) # Ksi E
 
-                                    D = ((z1 * R1)/(ze * Re)) * ((re/r2) ** (2 * gamma)) *\
+                                    D = ((z1 * R1)/(ze * re)) * ((re/r2) ** (2 * gamma)) *\
                                                                                         ((k1 * (ke - 1) * (M1 ** 2))/
                                          (2 * ke * gamma * sqreps * fi2 * Ksig * ksi4zone * (r2 ** (2 * m))))
 
