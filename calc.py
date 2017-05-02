@@ -123,7 +123,7 @@ class calcul:
                         schet += 1
                         wzsPer.append(wz)
 
-                        print(schet)
+                        # print(schet)
 
 
     @staticmethod
@@ -134,6 +134,9 @@ class calcul:
         mzs4zone = []
         mfsAx = []
         wfsAx = []
+        Re = []
+        r3zones = []
+        r4zones = []
 
         sqreps = (1 + eps1 ** 2)
 
@@ -171,12 +174,13 @@ class calcul:
 
                             fi2 = 1 - A * ((1 / (r2 ** (2 * m))) - 1)
 
-                            gamma = ((k1 * (k2 - 1))/(2 * k2)) * ((z1 * R1)/(z2 * R2)) * ((M1 ** 2)/((r2 ** (2 * m)) *
-                                                                                                theta2 * fi2 * sqreps *
-                                    (1 - ((1/pi0) ** ((k2 - 1)/k2)) * (1/(fi2 ** ((k1 * (k2 - 1))/(k2 * (k1 - 1))))))))
+                            gamma = ((k1 * (k2 - 1))/(2 * k2)) * ((z1 * R1)/(z2 * R2)) * \
+                                    ((M1 ** 2)/((r2 ** (2 * m)) * theta2 * fi2 * sqreps *
+                                                (1 - ((1/pi0) ** ((k2 - 1)/k2)) *
+                                                 (1/(fi2 ** ((k1 * (k2 - 1))/(k2 * (k1 - 1))))))))
 
-                            B = ((z1 * R1)/(z2 * R2)) * (((k2 - 1) * k1 * (M1 ** 2))/(2 * gamma * k2 * sqreps *
-                                                                                      (r2 ** (2 * m)) * theta2 * fi2))
+                            B = ((z1 * R1)/(z2 * R2)) * (((k2 - 1) * k1 * (M1 ** 2))/
+                                                         (2 * gamma * k2 * sqreps * (r2 ** (2 * m)) * theta2 * fi2))
 
                             C = ((k1 * (k3 - 1) * (M1 ** 2))/(2 * k3 * gamma * sqreps * fi2 * (r2 ** (2 * m))))\
                                 * ((z1 * R1)/(z3 * R3))
@@ -184,44 +188,56 @@ class calcul:
                             re = rg * ((1 - (1/C) *
                                         (1 - ((1/(Pie * (fi2 ** (k1/(k1 - 1))))) ** ((k3 - 1)/k3)))) ** 1/(2 * gamma))
 
-                            r3zones = np.arange(re, r2, 0.05)
+                            Re.append(re)
 
-                            r4zones = np.arange(0, re, 0.05)
 
-                            for u, r3zone in enumerate(r3zones):
+                            for h, re in enumerate(Re):
 
-                                ksi3zone = 1 - C * (1 - ((r3zone/rg) ** (2 * gamma)))
+                                r3zone = np.arange(re, rg, 0.05)
 
-                                mz3zone = np.sqrt((2/k3) * (1 - (1/(Piks * (fi2 ** (k1/(k1 - 1)))
-                                                                    * (Ksig ** (k2/(k2 - 1)))
-                                                                    * (ksi3zone ** (k3/(k3 - 1)))))))
+                                # r3zones.append(r3zone)
 
-                                mzs3zone.append(mz3zone)
+                                r4zone = np.arange(0, re, 0.05)
 
-                            for y, r4zone in enumerate(r4zones):
+                                # r4zones.append(r4zone)
 
-                                ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma))) # Ksi E
+                                for u, r3zone in enumerate(r3zones):
 
-                                D = ((z1 * R1)/(ze * Re)) * ((re/r2) ** (2 * gamma)) * ((k1 * (ke - 1) * (M1 ** 2))/
-                                                (2 * ke * gamma * sqreps * fi2 * Ksig * ksi4zone * (r2 ** (2 * m))))
+                                    ksi3zone = 1 - C * (1 - ((r3zone/rg) ** (2 * gamma)))
 
-                                U = 1 - D * (1 - ((r4zone/re) ** (2 * gamma)))
+                                    mz3zone = np.sqrt((2/k3) * (1 - (1/(Piks * (fi2 ** (k1/(k1 - 1))) *
+                                                            (Ksig ** (k2/(k2 - 1))) * (ksi3zone ** (k3/(k3 - 1)))))))
 
-                                mz4zone = np.sqrt((2/k3) * ((1/(Piks * (fi2 ** (k1/(k1 - 1))) * (Ksig ** (k2/(k2 - 1)))
-                                                            * (ksi4zone ** (k3/(k3 - 1))) * (U ** (ke/(ke - 1))))) - 1))
+                                    mzs3zone.append(mz3zone)
 
-                                mzs4zone.append(mz4zone)
+                                for y, r4zone in enumerate(r4zones):
 
-                            for k, r in enumerate(rs):
+                                    ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma))) # Ksi E
 
-                                MfAx = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * (((k1 * R1)/(k2 * R2)) ** 0.5)\
-                                     * (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
+                                    D = ((z1 * R1)/(ze * Re)) * ((re/r2) ** (2 * gamma)) *\
+                                                                                        ((k1 * (ke - 1) * (M1 ** 2))/
+                                         (2 * ke * gamma * sqreps * fi2 * Ksig * ksi4zone * (r2 ** (2 * m))))
 
-                                mfsAx.append(MfAx)
+                                    U = 1 - D * (1 - ((r4zone/re) ** (2 * gamma)))
 
-                                WfAx = a1 * MfAx
+                                    mz4zone = np.sqrt((2/k3) * ((1/(Piks * (fi2 ** (k1/(k1 - 1))) *
+                                                                    (Ksig ** (k2/(k2 - 1))) *
+                                                                    (ksi4zone ** (k3/(k3 - 1))) *
+                                                                    (U ** (ke/(ke - 1))))) - 1))
 
-                                wfsAx.append(WfAx)
+                                    mzs4zone.append(mz4zone)
+
+                                for k, r in enumerate(rs):
+
+                                    MfAx = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * \
+                                           (((k1 * R1)/(k2 * R2)) ** 0.5) * \
+                                           (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
+
+                                    mfsAx.append(MfAx)
+
+                                    WfAx = a1 * MfAx
+
+                                    wfsAx.append(WfAx)
 
     # @staticmethod
     # def run():
@@ -241,10 +257,10 @@ if __name__ == '__main__':
                          calcul.allM1, calcul.a1, calcul.theta2, calcul.ms, calcul.k1, calcul.k2,
                          calcul.k3, calcul.ke, calcul.z1, calcul.z2, calcul.z3, calcul.ze, calcul.Pi0, calcul.Ksig)
 
-    pool = Pool()
-    pool.map(periph, axial)
-    pool.close()
-    pool.join()
+    # pool = Pool()
+    # pool.map(periph, axial)
+    # pool.close()
+    # pool.join()
 
 
     # calcul.run()
