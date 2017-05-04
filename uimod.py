@@ -57,20 +57,23 @@ class MainWindow(QMainWindow):
     def calc_part(self):
         if self.wnd.radioButton_1.isChecked():
             eps = calcul.epsi[0]
-            sqreps = math.tan(eps)
+            # sqreps = math.tan(eps)
 
         elif self.wnd.radioButton_2.isChecked():
             eps = calcul.epsi[1]
-            sqreps = math.tan(eps)
+            # sqreps = math.tan(eps)
 
         elif self.wnd.radioButton_3.isChecked():
             eps = calcul.epsi[2]
-            sqreps = math.tan(eps)
+            # sqreps = math.tan(eps)
 
         r2 = self.wnd.dblSpinBox_1.value()
 
-        res1 = calcul.peripheral(r2, eps)
-        res2 = calcul.axial(eps, r2)
+        # res1 = calcul.peripheral(r2, eps)
+        res2 = calcul.axial(calcul.R1, calcul.R2, calcul.R3, calcul.Re, eps, calcul.r2,
+                            calcul.allM1, calcul.a1, calcul.theta2, calcul.ms,
+                            calcul.k1, calcul.k2, calcul.k3,
+                            calcul.ke, calcul.z1, calcul.z2, calcul.z3, calcul.ze, calcul.Pi0, calcul.Ksig)
 
 
 
