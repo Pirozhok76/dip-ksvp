@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="btn1">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>220</x>
       <y>260</y>
       <width>111</width>
       <height>41</height>
@@ -47,7 +47,7 @@
       <x>170</x>
       <y>10</y>
       <width>221</width>
-      <height>181</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -138,7 +138,7 @@
      <property name="lineWidth">
       <number>1</number>
      </property>
-     <widget class="QRadioButton" name="radioButton_4">
+     <widget class="QRadioButton" name="radioButton_1">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -159,7 +159,7 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_5">
+     <widget class="QRadioButton" name="radioButton_2">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -177,7 +177,7 @@
        <string>75 °</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_6">
+     <widget class="QRadioButton" name="radioButton_3">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -200,10 +200,92 @@
     <zorder>frame_5</zorder>
     <zorder>frame_5</zorder>
    </widget>
+   <widget class="QFrame" name="frame_3">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>10</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QDoubleSpinBox" name="dblSpinBox_1">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>20</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="wrapping">
+      <bool>true</bool>
+     </property>
+     <property name="decimals">
+      <number>2</number>
+     </property>
+     <property name="minimum">
+      <double>0.500000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>0.800000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.050000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.500000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_27">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;r&lt;/span&gt;&lt;span style=&quot; font-size:14pt; vertical-align:sub;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; =&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>__</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>200</y>
+      <width>131</width>
+      <height>111</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>btn1</zorder>
    <zorder>frame</zorder>
    <zorder>label</zorder>
    <zorder>frame_2</zorder>
+   <zorder>frame_3</zorder>
+   <zorder>textEdit</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

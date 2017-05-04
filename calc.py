@@ -11,9 +11,13 @@ from multiprocessing import Pool
 
 
 class calcul:
-    eps = 60
-    eps1 = math.tan(eps)
 
+
+    epsi = np.array([60, 75, 85])
+
+    # eps1 = math.tan(eps)
+
+    # sqreps = 1 + eps ** 2
 
     R1 = 287
     R2 = 289
@@ -125,6 +129,35 @@ class calcul:
 
                         # print(schet)
 
+    @staticmethod
+    def gamma_calc(k1, k2, z1, z2, r2, m, fi2, sqreps, pi0, R1, R2, M1, theta2):
+
+        return (((k1 * (k2 - 1)) / (2 * k2)) * ((z1 * R1) / (z2 * R2)) *
+                ((M1 ** 2) / ((r2 ** (2 * m)) * theta2 * fi2 * sqreps *
+                (1 - ((1 / pi0) ** ((k2 - 1) / k2)) * (1 / (fi2 ** ((k1 * (k2 - 1)) / (k2 * (k1 - 1)))))))))
+
+
+    @staticmethod
+    def fi2_calc(r2, A, m):
+        return 1 - A * ((1 / (r2 ** (2 * m))) - 1)
+
+    @staticmethod
+    def A_calc(sqreps, M1, k1, ms):
+
+        for p, m in enumerate(ms):
+
+            A = ((k1 - 1) / (2 * m)) * ((M1 ** 2) / (1 + sqreps))
+
+            return A
+
+    @staticmethod
+    def m_calc(theta2, R1, R2, r2, ms):
+
+        for j, theta in enumerate(theta2):
+            m = 1 + ((math.log10(R1 / R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+            ms.append(m)
+            return ms
+
 
     @staticmethod
     def axial(R1, R2, R3, Re, eps1, r2s, allM1, a1, theta2, ms, k1, k2, k3, ke, z1, z2, z3, ze, Pi0, Ksig):
@@ -150,7 +183,7 @@ class calcul:
 
                 for j, theta in enumerate(theta2):
 
-                    m = 1 + ((math.log10(R1 / R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+                    m = 1 + ((math.log10(R1/R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
 
                     ms.append(m)
 
