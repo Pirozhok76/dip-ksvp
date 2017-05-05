@@ -48,7 +48,7 @@ class calcul:
 
 
     @staticmethod
-    def peripheral(R1, R2, delta, eps1, r2s, allM1, a1, theta2, ms, k1, T1):    #периферийный вихрь
+    def peripheral(eps, r2 ):    #периферийный вихрь
 
         ''' нет 3х эпюр'''
         ''' эпюры '''
@@ -64,77 +64,77 @@ class calcul:
         wsPer = []
         '''  ___  '''
 
-        sqreps = (1 + eps1 ** 2)
-
-        for i, r2 in enumerate(r2s):
-
-            rm = ((1 + r2) / 2) + delta
-
-            rs = np.arange(r2, 1, 0.05)
-
-            r0 = 2 * rm - r2
-
-            for j, theta in enumerate(theta2):
-                m = 1 + ((math.log10(R1 / R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
-                ms.append(m)
-
-            for k, r in enumerate(rs):
+        sqreps = (1 + eps ** 2)
 
 
-                for l, M1 in enumerate(allM1):
-                    mz1 = M1 / (sqreps ** 0.5)
+        rm = ((1 + r2) / 2) + calcul.delta
 
-                    w1 = M1 * a1
+        rs = np.arange(r2, 1, 0.05)
 
-                    wz1 = mz1 * a1
+        r0 = 2 * rm - r2
 
-                    mf1 = mz1 * eps1
+        for j, theta in enumerate(calcul.theta2):
+            m = 1 + ((math.log10(calcul.R1 / calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+            calcul.ms.append(m)
 
-                    wf1 = mf1 * a1
+        for k, r in enumerate(rs):
 
-                    a = mz1 / ((1 - r2) * (r2 - 2 * rm + 1))
 
-                    b = -2 * a * rm
+            for l, M1 in enumerate(calcul.allM1):
+                mz1 = M1 / (sqreps ** 0.5)
 
-                    c = mz1 - a - b
+                w1 = M1 * calcul.a1
 
-                    n = ((a * (rm - 1)) ** 2) / mz1
+                wz1 = mz1 * calcul.a1
 
-                    _mzm = 1 + n
+                mf1 = mz1 * calcul.eps1
 
-                    mzm = mz1 * _mzm
+                wf1 = mf1 * calcul.a1
 
-                    mz = (a * r ** 2) + b * r + c
-                    mzsPer.append(mz)
+                a = mz1 / ((1 - r2) * (r2 - 2 * rm + 1))
 
-                    for p, m in enumerate(ms):
+                b = -2 * a * rm
 
-                        A = ((k1 - 1)/(2 * m)) * ((M1 ** 2)/(1 + sqreps))
+                c = mz1 - a - b
 
-                        func1 = (1 - A * ((1 / (r ** (2 * m))) - 1))
-                        func2 = np.sqrt(k1 * R1 * T1 * func1)
+                n = ((a * (rm - 1)) ** 2) / mz1
 
-                        mf = M1 / ((sqreps ** 0.5) * (func1 ** 0.5) * (r ** (2 * m)))
-                        mfsPer.append(mf)
+                _mzm = 1 + n
 
-                        M = np.sqrt((mf ** 2) + (mz ** 2))
-                        MsPer.append(M)
+                mzm = mz1 * _mzm
 
-                        wf = (M1 / ((sqreps ** 0.5) * (r ** m))) * func2
-                        wfsPer.append(wf)
+                mz = (a * r ** 2) + b * r + c
+                mzsPer.append(mz)
 
-                        wz = mz * func2
-                        schet += 1
-                        wzsPer.append(wz)
+                for p, m in enumerate(calcul.ms):
+
+                    A = ((calcul.k1 - 1)/(2 * m)) * ((M1 ** 2)/(1 + sqreps))
+
+                    func1 = (1 - A * ((1 / (r ** (2 * m))) - 1))
+                    func2 = np.sqrt(calcul.k1 * calcul.R1 * calcul.T1 * func1)
+
+                    mf = M1 / ((sqreps ** 0.5) * (func1 ** 0.5) * (r ** (2 * m)))
+                    mfsPer.append(mf)
+
+                    M = np.sqrt((mf ** 2) + (mz ** 2))
+                    MsPer.append(M)
+
+                    wf = (M1 / ((sqreps ** 0.5) * (r ** m))) * func2
+                    wfsPer.append(wf)
+
+                    wz = mz * func2
+                    schet += 1
+                    wzsPer.append(wz)
 
                         # print(schet)
 
     @staticmethod
-    def gamma_calc(k1, k2, z1, z2, r2, m, fi2, sqreps, pi0, R1, R2, M1, theta2):
-
-        return (((k1 * (k2 - 1)) / (2 * k2)) * ((z1 * R1) / (z2 * R2)) *
-                ((M1 ** 2) / ((r2 ** (2 * m)) * theta2 * fi2 * sqreps *
-                (1 - ((1 / pi0) ** ((k2 - 1) / k2)) * (1 / (fi2 ** ((k1 * (k2 - 1)) / (k2 * (k1 - 1)))))))))
+    def gamma_calc(r2, m, eps, pi0, fi2, M1):
+        sqreps = 1 + eps ** 2
+        return (((calcul.k1 * (calcul.k2 - 1)) / (2 * calcul.k2)) * ((calcul.z1 * calcul.R1) / (calcul.z2 * calcul.R2))*
+                ((M1 ** 2) / ((r2 ** (2 * m)) * calcul.theta2 * fi2 * sqreps *
+                (1 - ((1 / pi0) ** ((calcul.k2 - 1) / calcul.k2)) * (1 / (fi2 ** ((calcul.k1 * (calcul.k2 - 1)) /
+                                                                                  (calcul.k2 * (calcul.k1 - 1)))))))))
 
     #
     # @staticmethod
@@ -149,18 +149,18 @@ class calcul:
     #         A = ((k1 - 1) / (2 * m)) * ((M1 ** 2) / (1 + sqreps))
     #
     #         return A
+    #
+    # @staticmethod
+    # def m_calc(r2, ms):
+    #
+    #     for j, theta in enumerate(calcul.theta2):
+    #         m = 1 + ((math.log10(calcul.R1 / calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+    #         ms.append(m)
+    #         return ms
+
 
     @staticmethod
-    def m_calc(theta2, R1, R2, r2, ms):
-
-        for j, theta in enumerate(theta2):
-            m = 1 + ((math.log10(R1 / R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
-            ms.append(m)
-            return ms
-
-
-    @staticmethod
-    def axial(R1, R2, R3, Re, eps, r2, allM1, a1, theta2, ms, k1, k2, k3, ke, z1, z2, z3, ze, Pi0, Ksig):
+    def axial( eps, r2):
         #приосевой вихрь
 
         mzs3zone = []
@@ -173,37 +173,37 @@ class calcul:
         #
         sqreps = (1 + eps ** 2)
 
-        for i, r2 in enumerate(r2):
+        # for i, r2 in enumerate(r2):
 
-            rs = np.arange(0, r2, 0.05)
+        rs = np.arange(0, r2, 0.05)
 
-            rg = r2
+        rg = r2
 
-            for o, pi0 in enumerate(Pi0):
+        for o, pi0 in enumerate(calcul.Pi0):
 
-                # for j, theta in enumerate(theta2):
-                #
-                #     m = 1 + ((math.log10(R1/R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
-                #
-                #     ms.append(m)
+            for j, theta in enumerate(calcul.theta2):
 
-                for l, M1 in enumerate(allM1):
+                m = 1 + ((math.log10(calcul.R1/calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+
+                calcul.ms.append(m)
+
+                for l, M1 in enumerate(calcul.allM1):
 
                     mz1 = M1/(sqreps ** 0.5)
 
-                    w1 = M1 * a1
+                    w1 = M1 * calcul.a1
 
-                    wz1 = mz1 * a1
+                    wz1 = mz1 * calcul.a1
 
                     mf1 = mz1 * eps
 
-                    Piks = 1/(1 - (((M1 ** 2) * k1)/2))
+                    Piks = 1/(1 - (((M1 ** 2) * calcul.k1)/2))
 
                     Pie = Piks
 
-                    for p, m in enumerate(ms):
+                    for p, m in enumerate(calcul.ms):
 
-                        A = ((k1 - 1) / (2 * m)) * ((M1 ** 2) / (1 + sqreps))
+                        A = ((calcul.k1 - 1) / (2 * m)) * ((M1 ** 2) / (1 + sqreps))
 
                         fi2 = 1 - A * ((1 / (r2 ** (2 * m))) - 1)
 
@@ -212,16 +212,16 @@ class calcul:
                         #                     (1 - ((1/pi0) ** ((k2 - 1)/k2)) *
                         #                      (1/(fi2 ** ((k1 * (k2 - 1))/(k2 * (k1 - 1))))))))
 
-                        gamma = calcul.gamma_calc(k1, k2, z1, R1, z2, R2, M1, r2, m, theta2, fi2, sqreps, pi0)
+                        gamma = calcul.gamma_calc( r2, m, eps, pi0, fi2, M1)
 
-                        B = ((z1 * R1)/(z2 * R2)) * (((k2 - 1) * k1 * (M1 ** 2))/
-                                                     (2 * gamma * k2 * sqreps * (r2 ** (2 * m)) * theta2 * fi2))
+                        B = ((calcul.z1 * calcul.R1)/(calcul.z2 * calcul.R2)) * (((calcul.k2 - 1) * calcul.k1 * (M1 ** 2))/
+                                                     (2 * gamma * calcul.k2 * sqreps * (r2 ** (2 * m)) * calcul.theta2 * fi2))
 
-                        C = ((k1 * (k3 - 1) * (M1 ** 2))/(2 * k3 * gamma * sqreps * fi2 * (r2 ** (2 * m))))\
-                            * ((z1 * R1)/(z3 * R3))
+                        C = ((calcul.k1 * (calcul.k3 - 1) * (M1 ** 2))/(2 * calcul.k3 * gamma * sqreps * fi2 * (r2 ** (2 * m))))\
+                            * ((calcul.z1 * calcul.R1)/(calcul.z3 * calcul.R3))
 
                         re = rg * ((1 - (1/C) *
-                                    (1 - ((1/(Pie * (fi2 ** (k1/(k1 - 1))))) ** ((k3 - 1)/k3)))) ** 1/(2 * gamma))
+                                    (1 - ((1/(Pie * (fi2 ** (calcul.k1/(calcul.k1 - 1))))) ** ((calcul.k3 - 1)/calcul.k3)))) ** 1/(2 * gamma))
 
                         re = re.tolist()
 
@@ -242,8 +242,8 @@ class calcul:
 
                                 ksi3zone = 1 - C * (1 - ((r3zone/rg) ** (2 * gamma)))
 
-                                mz3zone = np.sqrt((2/k3) * (1 - (1/(Piks * (fi2 ** (k1/(k1 - 1))) *
-                                                        (Ksig ** (k2/(k2 - 1))) * (ksi3zone ** (k3/(k3 - 1)))))))
+                                mz3zone = np.sqrt((2/calcul.k3) * (1 - (1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
+                                                        (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) * (ksi3zone ** (calcul.k3/(calcul.k3 - 1)))))))
 
                                 mzs3zone.append(mz3zone)
 
@@ -251,31 +251,30 @@ class calcul:
 
                                 ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma))) # Ksi E
 
-                                D = ((z1 * R1)/(ze * re)) * ((re/r2) ** (2 * gamma)) *\
-                                                                                    ((k1 * (ke - 1) * (M1 ** 2))/
-                                     (2 * ke * gamma * sqreps * fi2 * Ksig * ksi4zone * (r2 ** (2 * m))))
+                                D = ((calcul.z1 * calcul.R1)/(calcul.ze * re)) * ((re/r2) ** (2 * gamma)) *\
+                                                                                    ((calcul.k1 * (calcul.ke - 1) * (M1 ** 2))/
+                                     (2 * calcul.ke * gamma * sqreps * fi2 * calcul.Ksig * ksi4zone * (r2 ** (2 * m))))
 
                                 U = 1 - D * (1 - ((r4zone/re) ** (2 * gamma)))
 
-                                mz4zone = np.sqrt((2/k3) * ((1/(Piks * (fi2 ** (k1/(k1 - 1))) *
-                                                                (Ksig ** (k2/(k2 - 1))) *
-                                                                (ksi4zone ** (k3/(k3 - 1))) *
-                                                                (U ** (ke/(ke - 1))))) - 1))
+                                mz4zone = np.sqrt((2/calcul.k3) * ((1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) * (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) * (ksi4zone ** (calcul.k3/(calcul.k3 - 1))) *(U ** (calcul.ke/(calcul.ke - 1))))) - 1))
 
                                 mzs4zone.append(mz4zone)
 
                             for k, r in enumerate(rs):
 
                                 MfAx = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * \
-                                       (((k1 * R1)/(k2 * R2)) ** 0.5) * \
+                                       (((calcul.k1 * calcul.R1)/(calcul.k2 * calcul.R2)) ** 0.5) * \
                                        (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
 
                                 mfsAx.append(MfAx)
 
-                                WfAx = a1 * MfAx
+                                WfAx = calcul.a1 * MfAx
 
                                 wfsAx.append(WfAx)
+                                print(wfsAx)
 
+                                return wfsAx
     # @staticmethod
     # def run():
     #     calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,

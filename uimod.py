@@ -26,6 +26,14 @@ class MainWindow(QMainWindow):
 
         self.wnd.setWindowIcon(QIcon('icon.png')) #иконка окна
 
+        appearance = self.palette()
+        appearance.setColor(QtGui.QPalette.Normal, QtGui.QPalette.Window,
+                            QtGui.QColor("white"))
+
+        self.setPalette(appearance)
+
+        self.setAutoFillBackground(True)
+
         self.saveAction = self.wnd.action
 
         self.saveAction.setShortcut('Ctrl+S')
@@ -35,6 +43,8 @@ class MainWindow(QMainWindow):
         self.saveAction.triggered.connect(self.showDialog)
 
         self.exitAction = self.wnd.action_3
+
+        self.wnd.btn1.clicked.connect(self.run)
 
         # self.exitAction.setShortcut('Ctrl+Q')
         self.exitAction.setStatusTip('Выход из приложения')  # подсказка на статус-баре
@@ -51,10 +61,10 @@ class MainWindow(QMainWindow):
         f.close()
 
     def run(self):
-        # self.calc_part(self.wnd.textEdit)
-        pass
+        self.calc_part(self.wnd.textEdit)
+        # pass
 
-    def calc_part(self):
+    def calc_part(self, textEdit):
         if self.wnd.radioButton_1.isChecked():
             eps = calcul.epsi[0]
             # sqreps = math.tan(eps)
@@ -70,12 +80,9 @@ class MainWindow(QMainWindow):
         r2 = self.wnd.dblSpinBox_1.value()
 
         # res1 = calcul.peripheral(r2, eps)
-        res2 = calcul.axial(calcul.R1, calcul.R2, calcul.R3, calcul.Re, eps, calcul.r2,
-                            calcul.allM1, calcul.a1, calcul.theta2, calcul.ms,
-                            calcul.k1, calcul.k2, calcul.k3,
-                            calcul.ke, calcul.z1, calcul.z2, calcul.z3, calcul.ze, calcul.Pi0, calcul.Ksig)
+        res2 = calcul.axial( eps, r2)
 
-
+        textEdit.append(res2)
 
 
 
