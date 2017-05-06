@@ -22,9 +22,9 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
 
-        self.wnd = uic.loadUi('dippr.ui', self) #загрузка файла интерфейса wnd = window
+        self.wnd = uic.loadUi("./UIs/dippr.ui", self) #загрузка файла интерфейса wnd = window
 
-        self.wnd.setWindowIcon(QIcon('icon.png')) #иконка окна
+        self.wnd.setWindowIcon(QIcon("./resources/icon.png")) #иконка окна
 
         appearance = self.palette()
         appearance.setColor(QtGui.QPalette.Normal, QtGui.QPalette.Window,
