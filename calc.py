@@ -74,13 +74,15 @@ class calcul:
         r0 = 2 * rm - r2
 
         for j, theta in enumerate(calcul.theta2):
+
             m = 1 + ((math.log10(calcul.R1 / calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+
             calcul.ms.append(m)
 
         for k, r in enumerate(rs):
 
-
             for l, M1 in enumerate(calcul.allM1):
+
                 mz1 = M1 / (sqreps ** 0.5)
 
                 w1 = M1 * calcul.a1
@@ -130,11 +132,15 @@ class calcul:
 
     @staticmethod
     def gamma_calc(r2, m, eps, pi0, fi2, M1):
-        sqreps = 1 + eps ** 2
-        return (((calcul.k1 * (calcul.k2 - 1)) / (2 * calcul.k2)) * ((calcul.z1 * calcul.R1) / (calcul.z2 * calcul.R2))*
+
+        sqreps = 1 + eps ** 2  # вынес отдельно, т.к. постоянно используется в формулах
+
+        return (((calcul.k1 * (calcul.k2 - 1)) / (2 * calcul.k2)) *
+                ((calcul.z1 * calcul.R1) / (calcul.z2 * calcul.R2)) *
                 ((M1 ** 2) / ((r2 ** (2 * m)) * calcul.theta2 * fi2 * sqreps *
-                (1 - ((1 / pi0) ** ((calcul.k2 - 1) / calcul.k2)) * (1 / (fi2 ** ((calcul.k1 * (calcul.k2 - 1)) /
-                                                                                  (calcul.k2 * (calcul.k1 - 1)))))))))
+                              (1 - ((1 / pi0) ** ((calcul.k2 - 1) / calcul.k2)) *
+                               (1 / (fi2 ** ((calcul.k1 * (calcul.k2 - 1)) /
+                                             (calcul.k2 * (calcul.k1 - 1)))))))))
 
     #
     # @staticmethod
@@ -171,7 +177,7 @@ class calcul:
         r3zones = []
         r4zones = []
         #
-        sqreps = (1 + eps ** 2)
+        sqreps = (1 + eps ** 2)  # вынес отдельно, т.к. постоянно используется в формулах
 
         # for i, r2 in enumerate(r2):
 
@@ -212,23 +218,25 @@ class calcul:
                         #                     (1 - ((1/pi0) ** ((k2 - 1)/k2)) *
                         #                      (1/(fi2 ** ((k1 * (k2 - 1))/(k2 * (k1 - 1))))))))
 
-                        gamma = calcul.gamma_calc( r2, m, eps, pi0, fi2, M1)
+                        gamma = calcul.gamma_calc(r2, m, eps, pi0, fi2, M1)
 
-                        B = ((calcul.z1 * calcul.R1)/(calcul.z2 * calcul.R2)) * (((calcul.k2 - 1) * calcul.k1 * (M1 ** 2))/
-                                                     (2 * gamma * calcul.k2 * sqreps * (r2 ** (2 * m)) * calcul.theta2 * fi2))
+                        B = ((calcul.z1 * calcul.R1)/(calcul.z2 * calcul.R2)) * \
+                            (((calcul.k2 - 1) * calcul.k1 * (M1 ** 2)) /
+                             (2 * gamma * calcul.k2 * sqreps * (r2 ** (2 * m)) * calcul.theta2 * fi2))
 
-                        C = ((calcul.k1 * (calcul.k3 - 1) * (M1 ** 2))/(2 * calcul.k3 * gamma * sqreps * fi2 * (r2 ** (2 * m))))\
-                            * ((calcul.z1 * calcul.R1)/(calcul.z3 * calcul.R3))
+                        C = ((calcul.k1 * (calcul.k3 - 1) * (M1 ** 2)) /
+                             (2 * calcul.k3 * gamma * sqreps * fi2 * (r2 ** (2 * m)))) * \
+                            ((calcul.z1 * calcul.R1)/(calcul.z3 * calcul.R3))
 
                         re = rg * ((1 - (1/C) *
-                                    (1 - ((1/(Pie * (fi2 ** (calcul.k1/(calcul.k1 - 1))))) ** ((calcul.k3 - 1)/calcul.k3)))) ** 1/(2 * gamma))
+                                    (1 - ((1/(Pie * (fi2 ** (calcul.k1/(calcul.k1 - 1))))) **
+                                          ((calcul.k3 - 1)/calcul.k3)))) ** 1/(2 * gamma))
 
                         re = re.tolist()
 
                         Re.extend(re)
 
-
-                        for h, re in enumerate(Re):
+                        for h, re in enumerate(Re):  # расчет радиуса для 3й и 4й зоны
 
                             r3zones = np.arange(re, rg, 0.05)
 
@@ -238,40 +246,52 @@ class calcul:
 
                             # r4zones.append(r4zone)
 
-                            for u, r3zone in enumerate(r3zones):
+                            for u, r3zone in enumerate(r3zones):   # 3я зона
 
                                 ksi3zone = 1 - C * (1 - ((r3zone/rg) ** (2 * gamma)))
 
-                                mz3zone = np.sqrt((2/calcul.k3) * (1 - (1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
-                                                        (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) * (ksi3zone ** (calcul.k3/(calcul.k3 - 1)))))))
+                                mz3zone = np.sqrt((2/calcul.k3) *
+                                                  (1 - (1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
+                                                           (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
+                                                           (ksi3zone ** (calcul.k3/(calcul.k3 - 1)))))))
 
                                 mzs3zone.append(mz3zone)
 
-                            for y, r4zone in enumerate(r4zones):
+                            for y, r4zone in enumerate(r4zones):  # 4я зона
 
-                                ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma))) # Ksi E
+                                ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma)))  # Ksi E
 
-                                D = ((calcul.z1 * calcul.R1)/(calcul.ze * re)) * ((re/r2) ** (2 * gamma)) *\
-                                                                                    ((calcul.k1 * (calcul.ke - 1) * (M1 ** 2))/
+                                d = ((calcul.z1 * calcul.R1)/(calcul.ze * re)) * \
+                                    ((re/r2) ** (2 * gamma)) * \
+                                    ((calcul.k1 * (calcul.ke - 1) * (M1 ** 2)) /
                                      (2 * calcul.ke * gamma * sqreps * fi2 * calcul.Ksig * ksi4zone * (r2 ** (2 * m))))
 
-                                U = 1 - D * (1 - ((r4zone/re) ** (2 * gamma)))
+                                U = 1 - d * (1 - ((r4zone/re) ** (2 * gamma)))
 
-                                mz4zone = np.sqrt((2/calcul.k3) * ((1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) * (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) * (ksi4zone ** (calcul.k3/(calcul.k3 - 1))) *(U ** (calcul.ke/(calcul.ke - 1))))) - 1))
+                                try:
+                                    mz4zone = np.sqrt((2/calcul.k3) *
+                                                      ((1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
+                                                       (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
+                                                       (ksi4zone ** (calcul.k3/(calcul.k3 - 1))) *
+                                                       (U ** (calcul.ke/(calcul.ke - 1))))) - 1))
 
-                                mzs4zone.append(mz4zone)
+                                except RuntimeWarning:
+                                    y += 1
 
-                            for k, r in enumerate(rs):
+                                else:
+                                    mzs4zone.append(mz4zone)
 
-                                MfAx = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * \
+                            for k, r in enumerate(rs):  # распределение Mf и Wf по 1, 3 и 4 зонам
+
+                                mfAx = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * \
                                        (((calcul.k1 * calcul.R1)/(calcul.k2 * calcul.R2)) ** 0.5) * \
                                        (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
 
-                                mfsAx.append(MfAx)
+                                mfsAx.append(mfAx)
 
-                                WfAx = calcul.a1 * MfAx
+                                wfAx = calcul.a1 * mfAx
 
-                                wfsAx.append(WfAx)
+                                wfsAx.append(wfAx)
                                 print(wfsAx)
 
                                 return wfsAx

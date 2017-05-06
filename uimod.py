@@ -80,7 +80,7 @@ class MainWindow(QMainWindow):
         r2 = self.wnd.dblSpinBox_1.value()
 
         # res1 = calcul.peripheral(r2, eps)
-        res2 = calcul.axial( eps, r2)
+        res2 = calcul.axial(eps, r2)
 
         textEdit.append(res2)
 
