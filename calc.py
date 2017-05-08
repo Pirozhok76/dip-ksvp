@@ -181,7 +181,7 @@ class calcul:
 
         # for i, r2 in enumerate(r2):
 
-        rs = np.arange(0, r2, 0.05)
+        rs = np.arange(0.0001, r2, 0.05)
 
         rg = r2
 
@@ -242,7 +242,7 @@ class calcul:
 
                             # r3zones.append(r3zone)
 
-                            r4zones = np.arange(0, re, 0.05)
+                            r4zones = np.arange(0.0001, re, 0.05)
 
                             # r4zones.append(r4zone)
 
@@ -268,18 +268,18 @@ class calcul:
 
                                 U = 1 - d * (1 - ((r4zone/re) ** (2 * gamma)))
 
-                                try:
-                                    mz4zone = np.sqrt((2/calcul.k3) *
-                                                      ((1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
-                                                       (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
-                                                       (ksi4zone ** (calcul.k3/(calcul.k3 - 1))) *
-                                                       (U ** (calcul.ke/(calcul.ke - 1))))) - 1))
-
-                                except RuntimeWarning:
-                                    y += 1
-
-                                else:
-                                    mzs4zone.append(mz4zone)
+                                # try:
+                                #     mz4zone = np.sqrt((2/calcul.k3) *
+                                #                       ((1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
+                                #                        (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
+                                #                        (ksi4zone ** (calcul.k3/(calcul.k3 - 1))) *
+                                #                        (U ** (calcul.ke/(calcul.ke - 1))))) - 1))
+                                #
+                                # except RuntimeWarning:
+                                #     y += 1
+                                #
+                                # else:
+                                #     mzs4zone.append(mz4zone)
 
                             for k, r in enumerate(rs):  # распределение Mf и Wf по 1, 3 и 4 зонам
 

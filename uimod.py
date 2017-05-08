@@ -82,7 +82,7 @@ class MainWindow(QMainWindow):
         # res1 = calcul.peripheral(r2, eps)
         res2 = calcul.axial(eps, r2)
 
-        textEdit.append(res2)
+        textEdit.append(str(res2))
 
 
 
