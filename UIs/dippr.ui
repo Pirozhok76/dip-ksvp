@@ -85,9 +85,6 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;R&lt;/span&gt;&lt;span style=&quot; font-size:12pt; vertical-align:sub;&quot;&gt;1&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;=287&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;R&lt;/span&gt;&lt;span style=&quot; font-size:12pt; vertical-align:sub;&quot;&gt;2&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;=289&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;R&lt;/span&gt;&lt;span style=&quot; font-size:12pt; vertical-align:sub;&quot;&gt;3&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;=283&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;R&lt;/span&gt;&lt;span style=&quot; font-size:12pt; vertical-align:sub;&quot;&gt;e&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;=283&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <zorder>label_8</zorder>
-    <zorder>label</zorder>
-    <zorder>frame_2</zorder>
    </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
@@ -196,9 +193,6 @@
       </property>
      </widget>
     </widget>
-    <zorder>label_7</zorder>
-    <zorder>frame_5</zorder>
-    <zorder>frame_5</zorder>
    </widget>
    <widget class="QFrame" name="frame_3">
     <property name="geometry">
@@ -280,12 +274,19 @@
      </rect>
     </property>
    </widget>
-   <zorder>btn1</zorder>
-   <zorder>frame</zorder>
-   <zorder>label</zorder>
-   <zorder>frame_2</zorder>
-   <zorder>frame_3</zorder>
-   <zorder>textEdit</zorder>
+   <widget class="QPushButton" name="btn2">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>270</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Visual</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

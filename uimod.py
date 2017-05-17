@@ -5,12 +5,17 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, \
 
 from PyQt5.QtGui import QIcon
 
+
 import math
 
 import sys
 
 
 from calc import calcul
+from MainDia import MainDia
+
+
+
 
 
 class MainWindow(QMainWindow):
@@ -22,7 +27,11 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
 
+
+
         self.wnd = uic.loadUi("./UIs/dippr.ui", self) #загрузка файла интерфейса wnd = window
+
+        QtCore.QTimer.singleShot(3000, self.showMainDia)
 
         self.wnd.setWindowIcon(QIcon("./resources/icon.png")) #иконка окна
 
@@ -44,7 +53,10 @@ class MainWindow(QMainWindow):
 
         self.exitAction = self.wnd.action_3
 
-        self.wnd.btn1.clicked.connect(self.run)
+        self.wnd.btn1.clicked.connect(self.runMW)
+
+        # self.wnd.btn2.clicked.connect(MainDia.InitUI)
+
 
         # self.exitAction.setShortcut('Ctrl+Q')
         self.exitAction.setStatusTip('Выход из приложения')  # подсказка на статус-баре
@@ -54,13 +66,17 @@ class MainWindow(QMainWindow):
 
         self.show()
 
+    def showMainDia(self):
+        self.show_MainDia = MainDia(self)
+        self.show_MainDia.InitUI()
+
     def showDialog(self):  #запись результатов в файл
         fname = QFileDialog.getSaveFileName(self, 'Сохранить файл', '/results.txt')[0]
         f = open(fname, 'w')
         # f.write()
         f.close()
 
-    def run(self):
+    def runMW(self):
         self.calc_part(self.wnd.textEdit)
         # pass
 

@@ -8,6 +8,13 @@ from paraview import servermanager
 
 class para:
 
+
+    @staticmethod
+    def RenWin():
+        renWim = CreateRenderView()
+
+
+
     @staticmethod
     def tryin():
 
@@ -24,13 +31,16 @@ class para:
 
         # sphere =
 
+
+            #python3 setup.py build_ext
+
         view = servermanager.CreateRenderView()
 
-        repSphere = servermanager.CreateRepresentation(sphere, view)
+        # repSphere = servermanager.CreateRepresentation(sphere, view)
 
         view.ResetCamera()
 
         view.StillRender()
 
 if __name__ == '__main__':
-    para.tryin()
+    para.RenWin()
