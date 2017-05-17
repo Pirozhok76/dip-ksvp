@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
 
         self.wnd = uic.loadUi("./UIs/dippr.ui", self) #загрузка файла интерфейса wnd = window
 
-        QtCore.QTimer.singleShot(3000, self.showMainDia)
+        # QtCore.QTimer.singleShot(3000, self.showMainDia)
 
         self.wnd.setWindowIcon(QIcon("./resources/icon.png")) #иконка окна
 
@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
 
         self.wnd.btn1.clicked.connect(self.runMW)
 
-        # self.wnd.btn2.clicked.connect(MainDia.InitUI)
+        self.wnd.btn2.clicked.connect(self.showMainDia)
 
 
         # self.exitAction.setShortcut('Ctrl+Q')
