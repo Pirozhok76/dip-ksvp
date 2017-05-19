@@ -13,8 +13,8 @@ from multiprocessing import Pool
 class calcul:
 
 
-    epsi = np.array([60, 75, 85])
-
+    # epsi = np.array([60, 75, 85])
+    epsi = np.array([2.7475, 3.732, 5.67, 11.43])
     # eps1 = math.tan(eps)
 
     # sqreps = 1 + eps ** 2
@@ -22,18 +22,20 @@ class calcul:
     R1 = 287
     R2 = 289
     R3 = 283
-    Re = 283 #????????????????
+    Re = 283    #????????????????
     z1 = 1
     z2 = 1
     z3 = 1
-    ze = 1 #""" ?????????
+    ze = 1  #""" ?????????
     r1 = 1
     T1 = 300
     k1 = 1.4
     k2 = 1.33
     k3 = 1.33
     ke = 1.33
-    theta2 = np.array([1, 2, 3, 4, 5, 6])
+    # theta2 = np.array([1, 2, 3, 4, 5, 6])
+    theta2 = 1
+    m = 1.04
     allM1 = np.array([0.1, 0.4, 0.8])
     a1 = np.sqrt(k1 * R1 * T1)
     delta = 0.1
@@ -64,6 +66,9 @@ class calcul:
         wsPer = []
         '''  ___  '''
 
+        # eps0 = math.tan(eps)  # тангенс в радианах
+        # eps1 = math.degrees(eps0)  # конверт в градусы
+
         sqreps = (1 + eps ** 2)
 
 
@@ -73,11 +78,11 @@ class calcul:
 
         r0 = 2 * rm - r2
 
-        for j, theta in enumerate(calcul.theta2):
+        # for j, theta in enumerate(calcul.theta2):
 
-            m = 1 + ((math.log10(calcul.R1 / calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+            # m = 1 + ((math.log10(calcul.R1 / calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
 
-            calcul.ms.append(m)
+            # calcul.ms.append(m)
 
         for k, r in enumerate(rs):
 
@@ -89,7 +94,7 @@ class calcul:
 
                 wz1 = mz1 * calcul.a1
 
-                mf1 = mz1 * calcul.eps1
+                mf1 = mz1 * eps
 
                 wf1 = mf1 * calcul.a1
 
@@ -108,36 +113,39 @@ class calcul:
                 mz = (a * r ** 2) + b * r + c
                 mzsPer.append(mz)
 
-                for p, m in enumerate(calcul.ms):
+                # for p, m in enumerate(calcul.ms):
 
-                    A = ((calcul.k1 - 1)/(2 * m)) * ((M1 ** 2)/(1 + sqreps))
+                A = ((calcul.k1 - 1)/(2 * calcul.m)) * ((M1 ** 2)/(1 + sqreps))
 
-                    func1 = (1 - A * ((1 / (r ** (2 * m))) - 1))
-                    func2 = np.sqrt(calcul.k1 * calcul.R1 * calcul.T1 * func1)
+                func1 = (1 - A * ((1 / (r ** (2 * calcul.m))) - 1))
+                func2 = np.sqrt(calcul.k1 * calcul.R1 * calcul.T1 * func1)
 
-                    mf = M1 / ((sqreps ** 0.5) * (func1 ** 0.5) * (r ** (2 * m)))
-                    mfsPer.append(mf)
+                mf = M1 / ((sqreps ** 0.5) * (func1 ** 0.5) * (r ** (2 * calcul.m)))
+                mfsPer.append(mf)
 
-                    M = np.sqrt((mf ** 2) + (mz ** 2))
-                    MsPer.append(M)
+                M = np.sqrt((mf ** 2) + (mz ** 2))
+                MsPer.append(M)
 
-                    wf = (M1 / ((sqreps ** 0.5) * (r ** m))) * func2
-                    wfsPer.append(wf)
+                wf = (M1 / ((sqreps ** 0.5) * (r ** calcul.m))) * func2
+                wfsPer.append(wf)
 
-                    wz = mz * func2
-                    schet += 1
-                    wzsPer.append(wz)
+                wz = mz * func2
+                # schet += 1
+                wzsPer.append(wz)
 
                         # print(schet)
 
     @staticmethod
-    def gamma_calc(r2, m, eps, pi0, fi2, M1):
+    def gamma_calc(r2, eps, pi0, fi2, M1):
+
+        # eps0 = math.tan(eps)  # тангенс в радианах
+        # eps1 = math.degrees(eps0)  # конверт в градусы
 
         sqreps = 1 + eps ** 2  # вынес отдельно, т.к. постоянно используется в формулах
 
         return (((calcul.k1 * (calcul.k2 - 1)) / (2 * calcul.k2)) *
                 ((calcul.z1 * calcul.R1) / (calcul.z2 * calcul.R2)) *
-                ((M1 ** 2) / ((r2 ** (2 * m)) * calcul.theta2 * fi2 * sqreps *
+                ((M1 ** 2) / ((r2 ** (2 * calcul.m)) * calcul.theta2 * fi2 * sqreps *
                               (1 - ((1 / pi0) ** ((calcul.k2 - 1) / calcul.k2)) *
                                (1 / (fi2 ** ((calcul.k1 * (calcul.k2 - 1)) /
                                              (calcul.k2 * (calcul.k1 - 1)))))))))
@@ -166,7 +174,7 @@ class calcul:
 
 
     @staticmethod
-    def axial( eps, r2):
+    def axial(eps, r2):
         #приосевой вихрь
 
         mzs3zone = []
@@ -176,7 +184,10 @@ class calcul:
         Re = []
         r3zones = []
         r4zones = []
-        #
+
+        # eps0 = math.tan(eps)       # тангенс в радианах
+        # eps1 = math.degrees(eps0)  # конверт в градусы
+
         sqreps = (1 + eps ** 2)  # вынес отдельно, т.к. постоянно используется в формулах
 
         # for i, r2 in enumerate(r2):
@@ -187,137 +198,140 @@ class calcul:
 
         for o, pi0 in enumerate(calcul.Pi0):
 
-            for j, theta in enumerate(calcul.theta2):
+            # for j, theta in enumerate(calcul.theta2):
 
-                m = 1 + ((math.log10(calcul.R1/calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
+                # m = 1 + ((math.log10(calcul.R1/calcul.R2)) - (math.log10(theta))) * (1 / (math.log10(r2)))
 
-                calcul.ms.append(m)
+                # calcul.ms.append(m)
 
-                for l, M1 in enumerate(calcul.allM1):
 
-                    mz1 = M1/(sqreps ** 0.5)
+            for l, M1 in enumerate(calcul.allM1):
 
-                    w1 = M1 * calcul.a1
+                mz1 = M1/(sqreps ** 0.5)
 
-                    wz1 = mz1 * calcul.a1
+                w1 = M1 * calcul.a1
 
-                    mf1 = mz1 * eps
+                wz1 = mz1 * calcul.a1
 
-                    Piks = 1/(1 - (((M1 ** 2) * calcul.k1)/2))
+                mf1 = mz1 * eps
 
-                    Pie = Piks
+                Piks = 1/(1 - (((M1 ** 2) * calcul.k1)/2))
 
-                    for p, m in enumerate(calcul.ms):
+                Pie = Piks
 
-                        A = ((calcul.k1 - 1) / (2 * m)) * ((M1 ** 2) / (1 + sqreps))
+                # for p, m in enumerate(calcul.ms):
 
-                        fi2 = 1 - A * ((1 / (r2 ** (2 * m))) - 1)
+                A = ((calcul.k1 - 1) / (2 * calcul.m)) * ((M1 ** 2) / (1 + sqreps))
 
-                        # gamma = ((k1 * (k2 - 1))/(2 * k2)) * ((z1 * R1)/(z2 * R2)) * \
-                        #         ((M1 ** 2)/((r2 ** (2 * m)) * theta2 * fi2 * sqreps *
-                        #                     (1 - ((1/pi0) ** ((k2 - 1)/k2)) *
-                        #                      (1/(fi2 ** ((k1 * (k2 - 1))/(k2 * (k1 - 1))))))))
+                fi2 = 1 - A * ((1 / (r2 ** (2 * calcul.m))) - 1)
 
-                        gamma = calcul.gamma_calc(r2, m, eps, pi0, fi2, M1)
+                # gamma = ((k1 * (k2 - 1))/(2 * k2)) * ((z1 * R1)/(z2 * R2)) * \
+                #         ((M1 ** 2)/((r2 ** (2 * m)) * theta2 * fi2 * sqreps *
+                #                     (1 - ((1/pi0) ** ((k2 - 1)/k2)) *
+                #                      (1/(fi2 ** ((k1 * (k2 - 1))/(k2 * (k1 - 1))))))))
 
-                        B = ((calcul.z1 * calcul.R1)/(calcul.z2 * calcul.R2)) * \
-                            (((calcul.k2 - 1) * calcul.k1 * (M1 ** 2)) /
-                             (2 * gamma * calcul.k2 * sqreps * (r2 ** (2 * m)) * calcul.theta2 * fi2))
+                gamma = calcul.gamma_calc(r2, eps, pi0, fi2, M1)
 
-                        C = ((calcul.k1 * (calcul.k3 - 1) * (M1 ** 2)) /
-                             (2 * calcul.k3 * gamma * sqreps * fi2 * (r2 ** (2 * m)))) * \
-                            ((calcul.z1 * calcul.R1)/(calcul.z3 * calcul.R3))
+                B = ((calcul.z1 * calcul.R1)/(calcul.z2 * calcul.R2)) * \
+                    (((calcul.k2 - 1) * calcul.k1 * (M1 ** 2)) /
+                     (2 * gamma * calcul.k2 * sqreps * (r2 ** (2 * calcul.m)) * calcul.theta2 * fi2))
 
-                        re = rg * ((1 - (1/C) *
-                                    (1 - ((1/(Pie * (fi2 ** (calcul.k1/(calcul.k1 - 1))))) **
-                                          ((calcul.k3 - 1)/calcul.k3)))) ** 1/(2 * gamma))
+                C = ((calcul.k1 * (calcul.k3 - 1) * (M1 ** 2)) /
+                     (2 * calcul.k3 * gamma * sqreps * fi2 * (r2 ** (2 * calcul.m)))) * \
+                    ((calcul.z1 * calcul.R1)/(calcul.z3 * calcul.R3))
 
-                        re = re.tolist()
+                re = rg * ((1 - (1/C) *
+                            (1 - ((1/(Pie * (fi2 ** (calcul.k1/(calcul.k1 - 1))))) **
+                                  ((calcul.k3 - 1)/calcul.k3)))) ** 1/(2 * gamma))
 
-                        Re.extend(re)
+                re = re.tolist()
 
-                        for h, re in enumerate(Re):  # расчет радиуса для 3й и 4й зоны
+                Re.append(re)
 
-                            r3zones = np.arange(re, rg, 0.05)
+                for h, re in enumerate(Re):  # расчет радиуса для 3й и 4й зоны
 
-                            # r3zones.append(r3zone)
+                    r3zones = np.arange(re, rg, 0.05)
 
-                            r4zones = np.arange(0.0001, re, 0.05)
+                    # r3zones.append(r3zone)
 
-                            # r4zones.append(r4zone)
+                    r4zones = np.arange(0.0001, re, 0.05)
 
-                            for u, r3zone in enumerate(r3zones):   # 3я зона
+                    # r4zones.append(r4zone)
 
-                                ksi3zone = 1 - C * (1 - ((r3zone/rg) ** (2 * gamma)))
+                    for u, r3zone in enumerate(r3zones):   # 3я зона
 
-                                mz3zone = np.sqrt((2/calcul.k3) *
-                                                  (1 - (1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
-                                                           (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
-                                                           (ksi3zone ** (calcul.k3/(calcul.k3 - 1)))))))
+                        ksi3zone = 1 - C * (1 - ((r3zone/rg) ** (2 * gamma)))
 
-                                mzs3zone.append(mz3zone)
+                        mz3zone = np.sqrt((2/calcul.k3) *
+                                          (1 - (1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
+                                                   (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
+                                                   (ksi3zone ** (calcul.k3/(calcul.k3 - 1)))))))
 
-                            for y, r4zone in enumerate(r4zones):  # 4я зона
+                        mzs3zone.append(mz3zone)
 
-                                ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma)))  # Ksi E
+                    for y, r4zone in enumerate(r4zones):  # 4я зона
 
-                                d = ((calcul.z1 * calcul.R1)/(calcul.ze * re)) * \
-                                    ((re/r2) ** (2 * gamma)) * \
-                                    ((calcul.k1 * (calcul.ke - 1) * (M1 ** 2)) /
-                                     (2 * calcul.ke * gamma * sqreps * fi2 * calcul.Ksig * ksi4zone * (r2 ** (2 * m))))
+                        ksi4zone = 1 - C * (1 - ((r4zone/re) ** (2 * gamma)))  # Ksi E
 
-                                U = 1 - d * (1 - ((r4zone/re) ** (2 * gamma)))
+                        d = ((calcul.z1 * calcul.R1)/(calcul.ze * re)) * \
+                            ((re/r2) ** (2 * gamma)) * \
+                            ((calcul.k1 * (calcul.ke - 1) * (M1 ** 2)) /
+                             (2 * calcul.ke * gamma * sqreps * fi2 * calcul.Ksig * ksi4zone *
+                              (r2 ** (2 * calcul.m))))
 
-                                # try:
-                                #     mz4zone = np.sqrt((2/calcul.k3) *
-                                #                       ((1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
-                                #                        (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
-                                #                        (ksi4zone ** (calcul.k3/(calcul.k3 - 1))) *
-                                #                        (U ** (calcul.ke/(calcul.ke - 1))))) - 1))
-                                #
-                                # except RuntimeWarning:
-                                #     y += 1
-                                #
-                                # else:
-                                #     mzs4zone.append(mz4zone)
+                        U = 1 - d * (1 - ((r4zone/re) ** (2 * gamma)))
 
-                            for k, r in enumerate(rs):  # распределение Mf и Wf по 1, 3 и 4 зонам
+                        # try:
+                        #     mz4zone = np.sqrt((2/calcul.k3) *
+                        #                       ((1/(Piks * (fi2 ** (calcul.k1/(calcul.k1 - 1))) *
+                        #                        (calcul.Ksig ** (calcul.k2/(calcul.k2 - 1))) *
+                        #                        (ksi4zone ** (calcul.k3/(calcul.k3 - 1))) *
+                        #                        (U ** (calcul.ke/(calcul.ke - 1))))) - 1))
+                        #
+                        # except RuntimeWarning:
+                        #     y += 1
+                        #
+                        # else:
+                        #     mzs4zone.append(mz4zone)
 
-                                mfAx = mf1 * (1/(r2 ** m)) * ((r/r2) ** gamma) * \
-                                       (((calcul.k1 * calcul.R1)/(calcul.k2 * calcul.R2)) ** 0.5) * \
-                                       (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
+                    for k, r in enumerate(rs):  # распределение Mf и Wf по 1, 3 и 4 зонам
 
-                                mfsAx.append(mfAx)
+                        mfAx = mf1 * (1/(r2 ** calcul.m)) * ((r/r2) ** gamma) * \
+                               (((calcul.k1 * calcul.R1)/(calcul.k2 * calcul.R2)) ** 0.5) * \
+                               (1/((fi2 ** 0.5) * ((1 - B * (1 - ((r/r2) ** (2 * gamma)))) ** 0.5)))
 
-                                wfAx = calcul.a1 * mfAx
+                        mfsAx.append(mfAx)
 
-                                wfsAx.append(wfAx)
-                                print(wfsAx)
+                        wfAx = calcul.a1 * mfAx
 
-                                return wfsAx
+                        wfsAx.append(wfAx)
+                        print(wfsAx)
+
+                        return wfsAx
     # @staticmethod
     # def run():
-    #     calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,
-    #                       calcul.eps1, calcul.r2s, calcul.allM1,
-    #                       calcul.a1, calcul.theta2, calcul.ms,
-    #                       calcul.k1, calcul.T1)
+    #     calcul.axial(eps = 5.67, r2 = 0.5)
+    # #     calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,
+    # #                       calcul.eps1, calcul.r2s, calcul.allM1,
+    # #                       calcul.a1, calcul.theta2, calcul.ms,
+    # #                       calcul.k1, calcul.T1)
 
 
 # if __name__ == '__main__':
 #
-#     # periph = calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,
-#     #                       calcul.eps1, calcul.r2s, calcul.allM1,
-#     #                       calcul.a1, calcul.theta2, calcul.ms,
-#     #                       calcul.k1, calcul.T1)
+# #     # periph = calcul.peripheral(calcul.R1, calcul.R2, calcul.delta,
+# #     #                       calcul.eps1, calcul.r2s, calcul.allM1,
+# #     #                       calcul.a1, calcul.theta2, calcul.ms,
+# #     #                       calcul.k1, calcul.T1)
+# #
+# #     axial = calcul.axial(calcul.R1, calcul.R2, calcul.R3, calcul.Re, eps, calcul.r2s,
+# #                          calcul.allM1, calcul.a1, calcul.theta2, calcul.ms, calcul.k1, calcul.k2,
+# #                          calcul.k3, calcul.ke, calcul.z1, calcul.z2, calcul.z3, calcul.ze, calcul.Pi0, calcul.Ksig)
 #
-#     axial = calcul.axial(calcul.R1, calcul.R2, calcul.R3, calcul.Re, eps, calcul.r2s,
-#                          calcul.allM1, calcul.a1, calcul.theta2, calcul.ms, calcul.k1, calcul.k2,
-#                          calcul.k3, calcul.ke, calcul.z1, calcul.z2, calcul.z3, calcul.ze, calcul.Pi0, calcul.Ksig)
-
-    # pool = Pool()
-    # pool.map(periph, axial)
-    # pool.close()
-    # pool.join()
-
-
-    # calcul.run()
+#     # pool = Pool()
+#     # pool.map(periph, axial)
+#     # pool.close()
+#     # pool.join()
+#
+#
+#     calcul.run()
